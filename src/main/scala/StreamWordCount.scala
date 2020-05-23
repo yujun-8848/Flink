@@ -7,12 +7,12 @@ object StreamWordCount {
   def main(args: Array[String]): Unit = {
     //创建流处理环境
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
-
+    env.setParallelism(1)
     //接受socket文本流
     //val inputDataStream = env.socketTextStream("", 8888)
     /*    val inputDataStream = env.fromCollection(List(SensorReading("hello", 1),
           SensorReading("hello", 1), SensorReading("hello", 1)))*/
-    val inputDataStream = env.addSource(new SourceTest())
+    //val inputDataStream = env.addSource(new SourceTest())
     /*val resultDataStream: DataStream[(String, Int)] = inputDataStream
       .flatMap(_.split(" "))
       .filter(_.endsWith("o"))
@@ -20,6 +20,12 @@ object StreamWordCount {
       .keyBy(0)
       .sum(1)*/
     // resultDataStream.print()
+    val result = env.readTextFile("D:\\Flink\\src\\main\\resources\\reading")
+    val value = result.flatMap(_.split(","))
+      .map((_, 1))
+      .keyBy(data => data._1)
+      .sum(1)
+    value.print()
     env.execute()
   }
 
