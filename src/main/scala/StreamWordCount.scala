@@ -1,3 +1,6 @@
+import org.apache.flink.api.common.serialization.SimpleStringEncoder
+import org.apache.flink.core.fs.Path
+import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSink
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala._
 
@@ -13,19 +16,27 @@ object StreamWordCount {
     /*    val inputDataStream = env.fromCollection(List(SensorReading("hello", 1),
           SensorReading("hello", 1), SensorReading("hello", 1)))*/
     //val inputDataStream = env.addSource(new SourceTest())
-    /*val resultDataStream: DataStream[(String, Int)] = inputDataStream
-      .flatMap(_.split(" "))
-      .filter(_.endsWith("o"))
-      .map((_, 1))
-      .keyBy(0)
-      .sum(1)*/
+    val inputDataStream = env.readTextFile("D:\\Flink\\src\\main\\resources\\reading")
+    val resultDataStream: DataStream[String] = inputDataStream
+        .map(
+          data => {
+            val arr = data.split(",")
+
+            SensorReading(arr(0),arr(1).toInt).toString
+          }
+        )
+
     // resultDataStream.print()
-    val result = env.readTextFile("D:\\Flink\\src\\main\\resources\\reading")
-    val value = result.flatMap(_.split(","))
+    /*val result = env.readTextFile("D:\\Flink\\src\\main\\resources\\reading")
+    val value : DataStream[(String,Int)] = result.flatMap(_.split(","))
       .map((_, 1))
       .keyBy(data => data._1)
-      .sum(1)
-    value.print()
+      .sum(1)*/
+    resultDataStream.addSink(StreamingFileSink.forRowFormat(
+     new Path("D:\\Flink\\src\\main\\resources\\out.txt"),
+       new SimpleStringEncoder[String]("UTF-8"))
+     .build()
+   )
     env.execute()
   }
 
