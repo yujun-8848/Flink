@@ -16,27 +16,30 @@ object StreamWordCount {
     /*    val inputDataStream = env.fromCollection(List(SensorReading("hello", 1),
           SensorReading("hello", 1), SensorReading("hello", 1)))*/
     //val inputDataStream = env.addSource(new SourceTest())
-    val inputDataStream = env.readTextFile("D:\\Flink\\src\\main\\resources\\reading")
-    val resultDataStream: DataStream[String] = inputDataStream
+    val inputDataStream = env.readTextFile("D:\\IdeaProjects\\flink\\src\\main\\resources\\reading")
+  /*  val resultDataStream: DataStream[String] = inputDataStream
         .map(
           data => {
             val arr = data.split(",")
 
             SensorReading(arr(0),arr(1).toInt).toString
           }
-        )
+        )*/
+  val value: DataStream[(String,String)] = inputDataStream.map(data => {
+    val strings: Array[String] = data.split(",")
+    (strings(0),strings(1))
+  })
 
     // resultDataStream.print()
     /*val result = env.readTextFile("D:\\Flink\\src\\main\\resources\\reading")
     val value : DataStream[(String,Int)] = result.flatMap(_.split(","))
+    val result = env.readTextFile("D:\\IdeaProjects\\flink\\src\\main\\resources\\reading")
+    val value = result.flatMap(_.split(","))
       .map((_, 1))
       .keyBy(data => data._1)
       .sum(1)*/
-    resultDataStream.addSink(StreamingFileSink.forRowFormat(
-     new Path("D:\\Flink\\src\\main\\resources\\out.txt"),
-       new SimpleStringEncoder[String]("UTF-8"))
-     .build()
-   )
+   value.print()
+
     env.execute()
   }
 
