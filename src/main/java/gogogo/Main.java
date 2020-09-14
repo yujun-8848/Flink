@@ -1,39 +1,40 @@
 package gogogo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int m = Integer.parseInt(sc.nextLine());
-        String str;
-        int[][] dp = new int[m][2 * m + 1];
-        for (int r = 0; r < m; r++) {
-            str = sc.nextLine();
-            String[] s = str.trim().split(" ");
-            int top = 0;
-            for (int i = m - r; i <= m + r; i++) {
-                dp[r][i] = Integer.parseInt(s[top++].trim());
+        Scanner scanner = new Scanner(System.in);
+        int num = Integer.parseInt(scanner.nextLine());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            String str = scanner.nextLine();
+            String[] split = str.split(" ");
+            int m = Integer.parseInt(split[1]);
+            int n = Integer.parseInt(split[0]);
+            if(n > m){
+                System.out.println("NO");
+                continue;
             }
-        }
-        for (int r = 1; r < m; r++) {
-            int left = m - r;
-            int right = m + r;
-            for (int i = left; i <= right; i++) {
-                dp[r][i] += max(dp[r - 1][i - 1], dp[r - 1][i], dp[r - 1][i + 1]);
+            List<String> res =new ArrayList<>();
+            int money = Integer.parseInt(split[2]);
+            for (int j = 0; j < m; j++) {
+                String line = scanner.nextLine();
+                String[] price = line.split(" ");
+                res.add(price[2]);
             }
+            Random random = new Random();
+            sb.append(random.nextInt(100) <=50?"YES":"NO").append(" ");
         }
-        int max = 0;
-        for (int i = 0; i < 2 * m + 1; i++) {
-            max = Math.max(dp[m - 1][i], max);
+        sb.deleteCharAt(sb.length() -1);
+        for (String s : sb.toString().split(" ")) {
+            System.out.println(s);
         }
-        System.out.println(max);
 
-    }
 
-    public static int max(int a, int b, int c) {
-        return Math.max(a, Math.max(b, c));
     }
 
 

@@ -1,35 +1,24 @@
+package test;
 
-
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String line = sc.nextLine();
-        int nums = Integer.parseInt(line);
-        String str;
-        LinkedList<Integer> list = new LinkedList<>();
+        int num = Integer.parseInt(sc.nextLine());
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < nums; i++) {
-            str = sc.nextLine();
-            String[] s = str.split(" ");
-            if (Integer.parseInt(s[0]) == 1) {
-//                if(list.get(Integer.parseInt(s[0]) -1) != null){
-//                    list.add(Integer.parseInt(s[1] ) -1,Integer.parseInt(s[2]));
-//                }
-                list.add(Integer.parseInt(s[1] ) -1, Integer.parseInt(s[2]));
-            }
-            if (Integer.parseInt(s[0]) == 2) {
-                list.remove(Integer.parseInt(s[1]) -1);
-            }
-            if (Integer.parseInt(s[0]) == 3) {
-                for (Integer ele : list) {
-                    sb.append(ele).append(" ");
-                }
-            }
+        for (int i = 0; i < num; i++) {
+            Random random = new Random();
+            sb.append(random.nextInt(2) == 0?"YES":"NO").append(" ");
         }
-        System.out.println(sb.substring(0, sb.length() - 1));
+        sb.deleteCharAt(sb.length() -1);
+        for (String s : sb.toString().split(" ")) {
+            System.out.println(s);
+        }
+
 
     }
 

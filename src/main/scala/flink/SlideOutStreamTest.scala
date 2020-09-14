@@ -27,6 +27,7 @@ object SlideOutStreamTest {
     processStream.print("input data")
     processStream.getSideOutput(new OutputTag[String]("freezing alert")).print("alert data")
     env.execute()
+    Tuple1
 
   }
 
@@ -36,7 +37,6 @@ object SlideOutStreamTest {
     lazy val alertOutput: OutputTag[String] = new OutputTag[String]("freezing alert")
 
     override def processElement(value: SensorRending, ctx: ProcessFunction[SensorRending, SensorRending]#Context, out: Collector[SensorRending]): Unit = {
-
       if (value.temprtra < 32.0) {
         ctx.output(alertOutput, "freezing alert for"+value.id)
       }else{
