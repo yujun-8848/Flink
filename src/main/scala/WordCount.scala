@@ -6,7 +6,7 @@ object WordCount {
   def main(args: Array[String]): Unit = {
     //创建一个批处理的执行环境
     val env: ExecutionEnvironment = ExecutionEnvironment.getExecutionEnvironment
-    val inputDataSet: DataSet[String] = env.readTextFile("D:\\Flink\\src\\main\\resources\\wordcount")
+    val inputDataSet: DataSet[String] = env.readTextFile("D:\\IdeaProjects\\flink\\src\\main\\resources\\wordcount")
 
     val resultDataSet: DataSet[(String, Int)] = inputDataSet
       .flatMap(_.split(" "))
