@@ -43,6 +43,10 @@ public class UnionFind {
         count--;
     }
 
+    public boolean isConnect(int p ,int q){
+        return find(p) == find(q);
+    }
+
     public int getCount() {
         return count;
     }
