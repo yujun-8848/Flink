@@ -1,6 +1,6 @@
 package leetcode.cn.treenode;
 
-import leetcode.cn.TreeNode;
+import leetcode.cn.LD.TreeNode;
 
 /**
  * 124 二叉树最大路径和

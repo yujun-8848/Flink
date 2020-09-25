@@ -1,7 +1,7 @@
 package leetcode;
 
 
-import leetcode.cn.UnionFind;
+import leetcode.cn.LD.UnionFind;
 
 import java.util.ArrayList;
 import java.util.List;

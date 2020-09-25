@@ -1,6 +1,6 @@
 package leetcode.cn.treenode;
 
-import leetcode.cn.TreeNode;
+import leetcode.cn.LD.TreeNode;
 
 /**
  * 226 翻转二叉树

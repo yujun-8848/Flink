@@ -1,6 +1,6 @@
 package gogogo;
 
-import leetcode.cn.TreeNode;
+import leetcode.cn.LD.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

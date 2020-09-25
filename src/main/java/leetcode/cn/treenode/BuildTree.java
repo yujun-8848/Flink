@@ -1,6 +1,6 @@
 package leetcode.cn.treenode;
 
-import leetcode.cn.TreeNode;
+import leetcode.cn.LD.TreeNode;
 
 /**
  * 105 从前序遍历与中序遍历构造二叉树

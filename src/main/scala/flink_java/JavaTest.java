@@ -6,8 +6,9 @@ import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.operators.DataSource;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.tuple.Tuple4;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.util.Collector;
 
 import java.util.ArrayList;
@@ -44,6 +45,11 @@ public class JavaTest {
         list.add("123,1");
         list.add("2,2");
         return env.fromCollection(list);
+    }
+
+    public static void TalbeAPI(StreamExecutionEnvironment env){
+        StreamTableEnvironment environment = StreamTableEnvironment.create(env);
+
     }
 
     public static void join(ExecutionEnvironment env) throws Exception {
