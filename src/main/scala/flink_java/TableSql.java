@@ -79,7 +79,5 @@ public class TableSql {
                 .withSchema(outSchema).createTemporaryTable("outputTable");
         //输出
         resultTable.executeInsert("outputTable");
-
-
     }
 }
