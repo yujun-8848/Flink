@@ -1,5 +1,8 @@
 package leetcode.cn.Arrays;
 
+/**
+ * 283 移除0
+ */
 public class MoveZeroes {
 
     public void moveZeroes(int[] nums) {
