@@ -1,3 +1,5 @@
+package thread;
+
 import java.util.concurrent.TimeUnit;
 
 public class SleepBlocked implements Runnable{
@@ -10,6 +12,6 @@ public class SleepBlocked implements Runnable{
         } catch (InterruptedException e) {
             System.out.println("InterruptedException");
         }
-        System.out.println("Exiting SleepBlocked.run()");
+        System.out.println("Exiting thread.SleepBlocked.run()");
     }
 }

@@ -1,3 +1,5 @@
+package thread;
+
 public class SynchronizedBlocked implements Runnable {
 
 
@@ -18,6 +20,6 @@ public class SynchronizedBlocked implements Runnable {
     public void run(){
         System.out.println("Trying to call f()");
         f();
-        System.out.println("Exiting SynchronizedBlocked.run()");
+        System.out.println("Exiting thread.SynchronizedBlocked.run()");
     }
 }

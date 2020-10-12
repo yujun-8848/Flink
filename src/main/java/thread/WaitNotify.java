@@ -1,3 +1,5 @@
+package thread;
+
 public class WaitNotify {
 
     //标记位

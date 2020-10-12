@@ -14,7 +14,7 @@ object ExtendTest {
     private var n3:Int = 3
 
     def test1() = {
-      print("test1" + n3)
+      print("thread.test1" + n3)
     }
     private def test2() = {
       print("test2")

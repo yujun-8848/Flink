@@ -1,6 +1,7 @@
+package thread;
+
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadPool {

@@ -1,24 +1,21 @@
 package leetcode.cn.recall;
 
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * 39 组合总和
- *
- *
+ * 组合2： 数字只能使用一次
  */
-public class CombinationSum {
-
+public class CombinationSum2 {
     private static List<List<Integer>> res = new ArrayList<>();
 
-    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
 
         List<Integer> ans = new ArrayList<>();
+        Arrays.sort(candidates);
         dfs(candidates, 0, target, ans);
         return res;
-
     }
 
     public static void dfs(int[] candidates, int begin, int target, List<Integer> list) {
@@ -31,16 +28,20 @@ public class CombinationSum {
         }
         //用于对组合进行去重操作
         for (int i = begin; i < candidates.length; i++) {
+
+            if (i > begin && candidates[i] == candidates[i - 1]) {
+                continue;
+            }
             list.add(candidates[i]);
-            dfs(candidates, i, target - candidates[i], list);
+            //因为元素不能重复，递归下去使用i + 1,而不是i
+            dfs(candidates, i + 1, target - candidates[i], list);
             list.remove(list.size() - 1);
+
         }
     }
 
-
-
     public static void main(String[] args) {
-        int[] nums = {2, 3, 6, 7};
-        System.out.println(combinationSum(nums, 7));
+        int[] nums = {10, 1, 2, 7, 6, 1, 5};
+        System.out.println(combinationSum2(nums, 8));
     }
 }

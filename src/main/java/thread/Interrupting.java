@@ -1,3 +1,5 @@
+package thread;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -9,7 +11,7 @@ public class Interrupting {
     static void test(Runnable r) throws InterruptedException {
         Future<?> f = exec.submit(r);
         TimeUnit.SECONDS.sleep(1);
-        System.out.println("Interrupting" + r.getClass().getName());
+        System.out.println("thread.Interrupting" + r.getClass().getName());
         f.cancel(true);
         System.out.println("Interrupt sent to " + r.getClass().getName());
 
