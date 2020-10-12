@@ -18,7 +18,6 @@ public class NumIslands {
         if (grid == null || grid.length == 0) {
             return 0;
         }
-
         int row = grid.length;
         int col = grid[0].length;
         UnionFind unionFind = new UnionFind(grid);
