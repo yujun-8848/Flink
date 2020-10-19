@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class MinWindow {
 
-    public static String minWindow(String str1, String str2) {
+    public static int minWindow(String str1, String str2) {
         Map<Character, Integer> needs = new HashMap<>();
         Map<Character, Integer> windows = new HashMap<>();
         for (char c : str2.toCharArray()) {
@@ -26,7 +26,7 @@ public class MinWindow {
             while (valid == needs.size()) {
                 if (right - left < minLen) {
                     start = left;
-                    minLen = right - left;
+                    minLen = Math.min(minLen,right - left);
                 }
                 char d = str1.charAt(left);
                 left++;
@@ -38,12 +38,16 @@ public class MinWindow {
                 }
             }
         }
-        return minLen == Integer.MAX_VALUE ? "" : str1.substring(start, right);
+        //return minLen == Integer.MAX_VALUE ? "" : str1.substring(start, right);
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
     }
 
     public static void main(String[] args) {
         String str1 = "ebbancf";
         String str2 = "abc";
         System.out.println(minWindow(str1, str2));
+        String s1 = "abcde";
+        String s2 = "ac";
+        System.out.println(minWindow(s1,s2));
     }
 }
