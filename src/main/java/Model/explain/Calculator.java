@@ -14,7 +14,7 @@ public class Calculator {
                     stack.push(new Add(stack.pop(),new Number(expression.charAt(++i))));
                     break;
                 case '减':
-                    stack.push(new Add(stack.pop(),new Number(expression.charAt(++i))));
+                    stack.push(new Sub(stack.pop(),new Number(expression.charAt(++i))));
                     break;
                 default:
                     stack.push(new Number(word));
