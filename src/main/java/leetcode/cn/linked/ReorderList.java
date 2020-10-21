@@ -1,7 +1,9 @@
 package leetcode.cn.linked;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 143 重排链表
