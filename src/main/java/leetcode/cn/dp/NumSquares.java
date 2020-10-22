@@ -1,7 +1,5 @@
 package leetcode.cn.dp;
 
-import java.util.Collections;
-
 /**
  * 完全平方数
  */
