@@ -6,8 +6,6 @@ import java.util.List;
 
 /**
  * 39 组合总和
- *
- *
  */
 public class CombinationSum {
 
@@ -39,7 +37,7 @@ public class CombinationSum {
 
 
     public static void main(String[] args) {
-        int[] nums = {2, 3, 6, 7};
-        System.out.println(combinationSum(nums, 7));
+        int[] nums = {3, 8, 6};
+        System.out.println(combinationSum(nums, 14));
     }
 }

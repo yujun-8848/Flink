@@ -26,7 +26,7 @@ public class Partition {
         }
         for (int i = start; i < s.length(); i++) {
             if (!checkPalindrome(s, start, i)) {
-                return;
+                continue;
             }
             ans.add(s.substring(start, i + 1));
             dfs(s, i + 1, ans);

@@ -1,9 +1,8 @@
 package Model.mediator;
 
-import org.junit.Test;
+
 
 public class Client {
-    @Test
     public void test() {
         Player player = new Player();
         Player player1 = new Player();
@@ -12,7 +11,7 @@ public class Client {
         System.out.println(player1.money);
     }
 
-    @Test
+
     public void test2() {
         Group group = new Group();
         Player2 player2 = new Player2(group);

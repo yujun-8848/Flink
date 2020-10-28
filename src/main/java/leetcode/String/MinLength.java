@@ -37,7 +37,7 @@ public class MinLength {
                 char d = str1.charAt(left);
                 left++;
                 if (needs.containsKey(d)) {
-                    if (windows.get(c).equals(needs.get(c))) {
+                    if (windows.get(d).equals(needs.get(d))) {
                         valid--;
                     }
                     windows.put(d, windows.getOrDefault(d, 0) - 1);
