@@ -1,5 +1,8 @@
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yujun
@@ -9,11 +12,21 @@ import java.awt.event.*;
  * @createTime 2020年11月23日 16:41:00
  */
 public class TankFrame extends Frame {
-
-    private int x = 200, y = 200;
+    /**
+     * 坦克的位置和状态
+     */
+    private Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+    /**
+     * 存放子弹的个数
+     */
+    public List<Bullet> bullets = new ArrayList<>();
+    /**
+     * 窗口的基本大小
+     */
+    public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public TankFrame() {
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
         setVisible(true);
@@ -27,10 +40,39 @@ public class TankFrame extends Frame {
         });
     }
 
+    Image offScreenImage = null;
+
+    /**
+     * 解决图片闪烁问题
+     *
+     * @param g
+     */
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.black);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        print(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     @Override
     public void paint(Graphics g) {
-        System.out.println(11);
-        g.fillRect(x, y, 50, 50);
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量: " + bullets.size(), 10, 60);
+        g.setColor(c);
+
+        myTank.paint(g);
+        //若使用迭代器则会存在ConcurrentModificationException异常，迭代器在遍历过程中无法删除
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -40,26 +82,43 @@ public class TankFrame extends Frame {
         private boolean bR = false;
         private boolean bD = false;
 
+        @Override
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();
             switch (key) {
                 case KeyEvent.VK_LEFT:
-                    bL = true;
+                    bL = false;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    bR = true;
+                    bR = false;
                     break;
                 case KeyEvent.VK_UP:
-                    bU = true;
+                    bU = false;
                     break;
                 case KeyEvent.VK_DOWN:
-                    bD = true;
+                    bD = false;
                     break;
+
                 default:
                     break;
             }
+            setMainTankDir();
         }
 
+
+        private void setMainTankDir() {
+            if (!bL && !bU && !bR && !bD) {
+                myTank.setMoving(false);
+            } else {
+                myTank.setMoving(true);
+                if (bL) myTank.setDir(Dir.LEFT);
+                if (bU) myTank.setDir(Dir.UP);
+                if (bR) myTank.setDir(Dir.RIGHT);
+                if (bD) myTank.setDir(Dir.DOWN);
+            }
+        }
+
+        @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
             switch (key) {
@@ -75,9 +134,13 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = true;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
+                    break;
                 default:
                     break;
             }
+            setMainTankDir();
         }
     }
 }
