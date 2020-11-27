@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author yujun
@@ -13,14 +14,20 @@ public class Tank {
     private int y;
     private Dir dir;
     private TankFrame tf;
-    public static final int SPEED = 5;
-    private boolean moving = false;
+    public static final int WIDTH = ResourceMgr.tankU.getWidth();
+    public static final int HEIGHT = ResourceMgr.tankU.getHeight();
+    public static final int SPEED = 2;
+    private boolean moving = true;
+    private boolean living = true;
+    private Random random = new Random();
+    private Group group = Group.GOOD;
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     public int getX() {
@@ -55,12 +62,35 @@ public class Tank {
         this.moving = moving;
     }
 
-    public void paint(Graphics g) {
+    public Group getGroup() {
+        return group;
+    }
 
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
-        g.setColor(c);
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public void paint(Graphics g) {
+        if (!living) {
+            tf.tanks.remove(this);
+        }
+        switch (dir) {
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR, x, y, null);
+                break;
+
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD, x, y, null);
+                break;
+            default:
+                break;
+        }
         move();
     }
 
@@ -82,12 +112,22 @@ public class Tank {
                 x += SPEED;
                 break;
         }
+        if (random.nextInt(10) > 8) {
+            this.fire();
+        }
     }
 
     /**
      * 坦克发子弹，获取坦克的位置和方向
      */
     public void fire() {
-        tf.bullets.add(new Bullet(x, y, dir, tf));
+        int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        tf.bullets.add(new Bullet(bx, by, dir, this.group, tf));
+    }
+
+    public void die() {
+        this.living = false;
+        tf.explodes.add(new Explode(this.x, this.y, tf));
     }
 }

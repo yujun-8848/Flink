@@ -15,15 +15,25 @@ public class TankFrame extends Frame {
     /**
      * 坦克的位置和状态
      */
-    private Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+    private Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
     /**
      * 存放子弹的个数
      */
     public List<Bullet> bullets = new ArrayList<>();
     /**
+     * 敌方坦克
+     */
+    public List<Tank> tanks = new ArrayList<>();
+
+    /**
+     * 爆炸
+     */
+    public List<Explode> explodes = new ArrayList<>();
+    /**
      * 窗口的基本大小
      */
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    private Explode explode = new Explode(100, 100, null);
 
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -66,12 +76,26 @@ public class TankFrame extends Frame {
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量: " + bullets.size(), 10, 60);
+        g.drawString("敌人的数量" + tanks.size(), 10, 80);
         g.setColor(c);
 
         myTank.paint(g);
         //若使用迭代器则会存在ConcurrentModificationException异常，迭代器在遍历过程中无法删除
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
+        }
+
+        for (int i = 0; i < bullets.size(); i++) {
+            for (int j = 0; j < tanks.size(); j++) {
+                bullets.get(i).collideWith(tanks.get(j));
+            }
+        }
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
         }
     }
 

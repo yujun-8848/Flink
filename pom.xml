@@ -6,7 +6,11 @@
 
     <groupId>org.example</groupId>
     <artifactId>Flink</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>tank</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
